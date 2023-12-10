@@ -35,7 +35,7 @@ public class CookieAuthService : IAuthService
             return new ErrorResult("Bu mail adresiyle kayıtlı bir kullanıcı bulunamadı.");
 
         else if (!HashingHelper.VerifyPasswordHash(dto.Password, user.PasswordHash, user.PasswordSalt))
-            return new ErrorResult("Hatalı veya şifre.");
+            return new ErrorResult("Hatalı şifre.");
 
         var claims = new List<Claim>
         {
@@ -70,10 +70,10 @@ public class CookieAuthService : IAuthService
 
     public async Task<IResult> RegisterAsync(UserRegisterDto dto)
     {
-        var exists = await _repository.AnyAsync(u => u.Email == dto.Email);
+        var exists = await _repository.AnyAsync(u => u.Email == dto.Email || u.Username == dto.Username);
 
         if (exists)
-            return new ErrorResult("Bu mail adresi ile daha önce kayıt olunmuş");
+            return new ErrorResult("Bu mail adresi veya kullanıcı adi ile daha önce kayıt olunmuş");
 
 
         byte[] passwordHash, passwordSalt;

@@ -53,8 +53,31 @@ namespace WebMVC.Controllers
         }
 
         [HttpPost("Register")]
-        public IActionResult Register(UserLoginModel model)
+        public async Task<IActionResult> RegisterAsync(UserRegisterModel model)
         {
+            if (model.Password != model.ConfirmPassword)
+            {
+                ViewBag.ErrorMessage = "Şifreler aynı olmalı";
+                return View(model);
+            }
+
+            UserRegisterDto user = new()
+            {
+                Email = model.Email,
+                Password = model.Password,
+                Username = model.Username
+            };
+
+            var result = await _authService.RegisterAsync(user);
+
+            if (result.Success)
+                return RedirectToAction(nameof(Login));
+
+            else
+            {
+                ViewBag.ErrorMessage = result.Message;
+            }
+
             return View();
         }
 
