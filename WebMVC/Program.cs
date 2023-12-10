@@ -1,4 +1,5 @@
 using Data;
+using Business;
 using Data.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDataServices(builder.Configuration);
-
+builder.Services.AddBusinessServices();
 
 var app = builder.Build();
 
@@ -24,6 +25,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

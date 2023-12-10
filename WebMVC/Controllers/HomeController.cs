@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebMVC.Models;
@@ -15,6 +16,7 @@ namespace WebMVC.Controllers
 
         public IActionResult Index()
         {
+
             return View();
         }
 
