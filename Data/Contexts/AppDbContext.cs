@@ -1,4 +1,5 @@
-﻿using Core.DataAccess.Repositories;
+﻿using Core.Auth;
+using Core.DataAccess.Repositories;
 using Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -40,5 +41,33 @@ public class AppDbContext : DbContext
                 EntityState.Modified => entry.Entity.UpdatedDate = DateTime.UtcNow
             };
         return await base.SaveChangesAsync(cancellationToken);
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        byte[] passwordHash, passwordSalt;
+
+        HashingHelper.CreatePasswordHash("1234", out passwordHash, out passwordSalt);
+
+        List<User> users = new List<User>()
+        { 
+            new User() { Id = 1, Username = "admin", Email = "admin@mail.com", Role = "Admin", CreatedDate = DateTime.Now, PasswordHash = passwordHash, PasswordSalt = passwordSalt},
+            new User() { Id = 2, Username = "kemal", Email = "kemal@mail.com", Role = "Reader", CreatedDate = DateTime.Now, PasswordHash = passwordHash, PasswordSalt = passwordSalt},
+        };
+
+
+        List<Category> categories = new List<Category>() {
+            new Category() { Id = 1, Name = "Bilim", CreatedDate= DateTime.Now},
+            new Category() { Id = 2, Name = "Yazılım", CreatedDate= DateTime.Now},
+            new Category() { Id = 3, Name = "Teknoloji", CreatedDate= DateTime.Now},
+            new Category() { Id = 4, Name = "Sağlık", CreatedDate= DateTime.Now},
+        
+        };
+
+
+        modelBuilder.Entity<User>().HasData(users);
+        modelBuilder.Entity<Category>().HasData(categories);
+
+
     }
 }
