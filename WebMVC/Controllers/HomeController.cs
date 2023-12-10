@@ -1,3 +1,4 @@
+using Business.Abstract;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -8,17 +9,20 @@ namespace WebMVC.Controllers
 
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IPostService _postService;
+        private readonly ICategoryService _categoryService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IPostService postService, ICategoryService categoryService)
         {
-            _logger = logger;
+            _postService = postService;
+            _categoryService = categoryService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-
-            return View();
+            var postsResult = await _postService.GetAllAsync();
+            var posts = postsResult.Data;
+            return View(posts);
         }
 
         public IActionResult Privacy()

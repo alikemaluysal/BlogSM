@@ -68,6 +68,5 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<User>().HasData(users);
         modelBuilder.Entity<Category>().HasData(categories);
 
-
     }
 }

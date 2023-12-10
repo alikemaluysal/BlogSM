@@ -1,8 +1,64 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@using Entities
+@model List<Post>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+<!-- Google fonts-->
+<link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="~/css/styles.css" rel="stylesheet" />
+
+<!-- Page Header-->
+<header class="masthead">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    @if (ViewBag.CategoryName != null)
+                    {
+                        <h1>@ViewBag.CategoryName</h1>
+                    }
+                    else
+                    {
+                        <h1>Blog Yazıları</h1>
+
+                    }
+
+                    <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <!-- Post preview-->
+            @foreach (var item in Model)
+            {
+                <div class="post-preview">
+                    <a asp-controller="Posts" asp-action="Detail" asp-route-id="@item.Id">
+                        <h2 class="post-title">@item.Title</h2>
+                        @* <h3 class="post-subtitle"> @Html.Raw(item.Content.Substring(0, 20))...</h3> *@
+                    </a>
+                    <a asp-controller="Home" asp-action="Index" asp-route-id="@item.CategoryId">
+                        <h3 class="post-subtitle">@item.Category.Name</h3>
+                    </a>
+                    <p class="post-meta">
+                        @item.User.Username tarafından
+                        - @item.CreatedDate.ToString("dd MMMM, yyyy")
+                    </p>
+                </div>
+                <!-- Divider-->
+                <hr class="my-4" />
+            }
+
+
+        </div>
+    </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="~/js/scripts.js"></script>

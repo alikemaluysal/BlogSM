@@ -21,6 +21,7 @@ public static class BusinessServiceRegistration
         services.AddHttpContextAccessor();
         services.AddScoped<IAuthService, CookieAuthService>();
         services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<IPostService, PostService>();
 
 
         services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

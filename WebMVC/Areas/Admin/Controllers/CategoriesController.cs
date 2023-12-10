@@ -29,7 +29,7 @@ namespace WebMVC.Areas.Admin.Controllers
 
             if(!result.Success)
             {
-                ViewBag.ErrorMessage = result.Message;
+                TempData["ErrorMessage"] = result.Message;
             }
             return RedirectToAction(nameof(Index));
         }
