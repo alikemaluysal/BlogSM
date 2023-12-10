@@ -20,20 +20,23 @@ namespace WebMVC.Controllers
         }
 
         [HttpGet("Login")]
-        public IActionResult Login()
+        public IActionResult Login(string? ReturnUrl)
         {
+            TempData["ReturnUrl"] = ReturnUrl;
             return View();
         }
 
         [HttpPost("Login")]
         public async Task<IActionResult> LoginAsync(UserLoginModel model)
         {
+            string returnUrl = TempData["ReturnUrl"].ToString();
+
             var userLoginDto = new UserLoginDto() {Email = model.Email, Password = model.Password, RememberMe = model.RememberMe };
 
             var result = await _authService.LoginAsync(userLoginDto);
 
             if (result.Success)
-                return RedirectToAction("Index", "Home");
+                return LocalRedirect(returnUrl);
 
             else
             {
@@ -56,9 +59,10 @@ namespace WebMVC.Controllers
         }
 
         [HttpGet("Logout")]
-        public IActionResult Logout()
+        public async Task<IActionResult> LogoutAsync()
         {
-            return View();
+            await _authService.LogoutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
