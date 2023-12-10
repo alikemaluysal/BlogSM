@@ -20,6 +20,7 @@ public static class BusinessServiceRegistration
     {
         services.AddHttpContextAccessor();
         services.AddScoped<IAuthService, CookieAuthService>();
+        services.AddScoped<ICategoryService, CategoryService>();
 
 
         services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
