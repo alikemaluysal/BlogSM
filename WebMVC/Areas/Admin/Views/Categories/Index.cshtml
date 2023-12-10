@@ -1,0 +1,82 @@
+﻿@using Entities
+@model List<Category>
+
+<div>
+    <h2>Categories</h2>
+
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createModal">Create</button>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="createModalLabel">Create Category</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @await Html.PartialAsync("_CreateCategoryModal", new Category())
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-striped table-hover">
+        <thead>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Actions</th>
+        </thead>
+
+        <tbody>
+            @foreach (var category in Model)
+            {
+                <tr>
+                    <td>@category.Id</td>
+                    <td>@category.Name</td>
+                    <td>
+                        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal-@category.Id">Edit</button>
+                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@category.Id">Delete</button>
+                    </td>
+                </tr>
+
+
+                <!-- Edit Modal -->
+                <div class="modal fade" id="editModal-@category.Id" tabindex="-1" aria-labelledby="editModalLabel-@category.Id" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="editModalLabel-@category.Id">Update Category</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                @await Html.PartialAsync("_EditCategoryModal", category)
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delete Modal -->
+                <div class="modal fade" id="deleteModal-@category.Id" tabindex="-1" aria-labelledby="deleteModalLabel-@category.Id" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="deleteModalLabel-@category.Id">Delete Category</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                @await Html.PartialAsync("_DeleteCategoryModal", category)
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </tbody>
+    </table>
+
+</div>

@@ -31,9 +31,8 @@ public class CategoryService : ICategoryService
         return new SuccessResult("Ürün başarıyla eklendi.");
     }
 
-    public async Task<IResult> DeleteByIdAsync(int id)
+    public async Task<IResult> DeleteAsync(Category category)
     {
-        var category = await _repository.GetAsync(c => c.Id == id);
         await _repository.DeleteAsync(category);
         return new SuccessResult("Ürün başarıyla silindi.");
     }

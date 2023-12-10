@@ -1,0 +1,14 @@
+﻿@model Category
+
+<form method="post" asp-action="Edit">
+    <input type="hidden" asp-for="Id"  />
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name"></span>
+    </div>
+
+    <button type="submit" class="btn btn-warning mt-2">Edit</button>
+    <button type="button" class="btn btn-secondary mt-2" data-bs-dismiss="modal">Close</button>
+
+</form>

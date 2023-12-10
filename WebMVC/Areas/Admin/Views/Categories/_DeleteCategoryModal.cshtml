@@ -1,0 +1,26 @@
+﻿@model Category
+
+
+<h3>Silmek istediğinize emin misiniz?</h3>
+
+
+<div>
+    <dl>
+        <dt>
+            @Html.DisplayNameFor(c => c.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(c => c.Name)
+        </dd>
+    </dl>
+</div>
+
+
+<form method="post" asp-action="Delete">
+        <input type="hidden" asp-for="Name" class="form-control" />
+        <input type="hidden" asp-for="Id" class="form-control" />
+
+    <button type="submit" class="btn btn-danger mt-2">Delete</button>
+    <button type="button" class="btn btn-secondary mt-2" data-bs-dismiss="modal">Close</button>
+
+</form>

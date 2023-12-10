@@ -15,5 +15,5 @@ public interface ICategoryService
 
     Task<IResult> CreateAsync(Category category);
     Task<IResult> UpdateAsync(Category category);
-    Task<IResult> DeleteByIdAsync(int id);
+    Task<IResult> DeleteAsync(Category category);
 }
